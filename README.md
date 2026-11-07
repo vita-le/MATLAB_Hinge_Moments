@@ -25,7 +25,7 @@ The baseline framework combines three main components:
 
 The framework was applied to the F/A-18 Systems Research Aircraft (SRA), using a common geometric definition for the Roskam and Tornado implementations.
 
-![F/A-18 SRA Geometry](02_Documentation/Figures/aircraft_Geometry.png)
+![F/A-18 SRA Geometry](02_Documentation/Figures/Aircraft_Geometry.png)
 
 *F/A-18 SRA wing planform and aileron partition used in the computational framework.*
 
