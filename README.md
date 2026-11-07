@@ -92,7 +92,7 @@ The root directory contains the original thesis implementation. The `Supersonic_
 
 ## Technical Documentation
 
-Additional documentation is available in the `Documentation/Papers/` directory:
+Additional documentation is available in the `02_Documentation/Papers/` directory:
 
 - [Master's Thesis – Aileron Hinge Moment Estimation](02_Documentation/Papers/Masters_Thesis.pdf)
 - [Supersonic Extension – Miranda Kernel Implementation](02_Documentation/Papers/Supersonic_Extension.pdf)
@@ -114,6 +114,9 @@ The baseline methods have been evaluated against F/A-18 SRA reference data under
 ## Author
 
 **Andrea Vitale**
-
 MSc Aeronautical Engineering – Linköping University
 
+## Supervision and Contributions
+
+**Erick Espinoza Juarez** - Thesis Supervisor
+**Leone Tuci** - Supersonic Contribution 
