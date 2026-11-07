@@ -25,13 +25,13 @@ The baseline framework combines three main components:
 
 The framework was applied to the F/A-18 Systems Research Aircraft (SRA), using a common geometric definition for the Roskam and Tornado implementations.
 
-![F/A-18 SRA Geometry](Documentation/Figures/aircraft_geometry.png)
+![F/A-18 SRA Geometry](02_Documentation/Figures/aircraft_Geometry.png)
 
 *F/A-18 SRA wing planform and aileron partition used in the computational framework.*
 
 The aerodynamic model is generated using Tornado's Vortex Lattice Method.
 
-![Tornado VLM Mesh](Documentation/Figures/tornado_vlm_mesh.png)
+![Tornado VLM Mesh](02_Documentation/Figures/Tornado_Mesh.png)
 
 *Tornado VLM panel discretization of the wing and aileron.*
 
@@ -44,7 +44,9 @@ The validation covered two subsonic flight conditions:
 - Mach 0.72 – Roll doublet maneuver.
 - Mach 0.84 – Aileron reversal maneuver.
 
-![Subsonic Validation](Documentation/Figures/subsonic_validation.png)
+![Subsonic Validation](02_Documentation/Figures/Results_1.png)
+![Subsonic Validation](02_Documentation/Figures/Results_2.png)
+
 
 *Comparison between NASA flight-test data, reference simulation, Roskam and Tornado hinge moment estimates.*
 
@@ -63,11 +65,7 @@ Two approaches were investigated:
 
 The extended implementation was evaluated against NASA flight-test data for Mach 1.58 and Mach 1.60.
 
-![Supersonic Baseline](Documentation/Figures/supersonic_baseline.png)
-
-*Baseline model limitations under supersonic flight conditions.*
-
-![Supersonic Miranda Validation](Documentation/Figures/supersonic_miranda_validation.png)
+![Supersonic Miranda Validation](02_Documentation/Figures/Results_Sup.png)
 
 *Comparison of NASA flight-test data with the Mach-cone masking and Miranda generalized supersonic-kernel implementations.*
 
@@ -96,8 +94,8 @@ The root directory contains the original thesis implementation. The `Supersonic_
 
 Additional documentation is available in the `Documentation/Papers/` directory:
 
-- [Master's Thesis – Aileron Hinge Moment Estimation](Documentation/Papers/Masters_Thesis.pdf)
-- [Supersonic Extension – Miranda Kernel Implementation](Documentation/Papers/Supersonic_Extension.pdf)
+- [Master's Thesis – Aileron Hinge Moment Estimation](02_Documentation/Papers/Masters_Thesis.pdf)
+- [Supersonic Extension – Miranda Kernel Implementation](02_Documentation/Papers/Supersonic_Extension.pdf)
 
 These documents provide the theoretical background, mathematical formulations, implementation details, validation procedures and extended results.
 
