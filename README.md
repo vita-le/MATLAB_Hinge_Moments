@@ -1,21 +1,86 @@
 # Aircraft Aileron Hinge Moment Estimation
 
+A MATLAB-based framework for preliminary estimation of aircraft aileron hinge moments, combining semi-empirical methods, vortex lattice aerodynamics and standardized aircraft geometry inputs.
+
 ## Overview
 
-This repository contains the MATLAB framework developed during my Master's thesis for the estimation of aircraft aileron hinge moments.
+This repository contains the MATLAB code developed during my Master's thesis at Linköping University and its subsequent extension towards supersonic flight conditions.
 
-The project combines semi-empirical estimation methods based on Roskam's methodology with aerodynamic computations performed using the Tornado Vortex Lattice Method (VLM).
+The project focuses on the estimation of aileron hinge moments for aircraft conceptual design, supporting preliminary Flight Control System (FCS) sizing and actuator load assessment.
 
-The repository includes two main code versions:
+Two main implementations are included:
 
-- **Thesis Version:** the baseline implementation developed as part of the Master's thesis.
-- **Supersonic Extension:** an updated implementation introducing an additional correction to extend the methodology towards supersonic flight conditions.
+- **Thesis Implementation:** integration of Roskam's semi-empirical methodology and Tornado Vortex Lattice Method (VLM) within a common CPACS-based geometry framework.
+- **Supersonic Extension:** an updated Tornado implementation based on Miranda's generalized supersonic vortex-lattice formulation, introducing a supersonic influence kernel and self-residual term.
+
+## Methodology
+
+The baseline framework combines three main components:
+
+1. **Roskam Method:** automated implementation of the semi-empirical hinge moment estimation methodology, including digitization and interpolation of the relevant empirical charts.
+2. **Tornado VLM:** aerodynamic force computation and integration of the control-surface panel loads about the aileron hinge axis.
+3. **CPACS Interface:** standardized aircraft geometry definition, shared by both estimation methods.
+
+### Aircraft Geometry and Aerodynamic Model
+
+The framework was applied to the F/A-18 Systems Research Aircraft (SRA), using a common geometric definition for the Roskam and Tornado implementations.
+
+![F/A-18 SRA Geometry](Documentation/Figures/aircraft_geometry.png)
+
+*F/A-18 SRA wing planform and aileron partition used in the computational framework.*
+
+The aerodynamic model is generated using Tornado's Vortex Lattice Method.
+
+![Tornado VLM Mesh](Documentation/Figures/tornado_vlm_mesh.png)
+
+*Tornado VLM panel discretization of the wing and aileron.*
+
+## Validation and Results
+
+The baseline implementations were compared against NASA F/A-18 SRA flight-test data and reference simulation results from the literature.
+
+The validation covered two subsonic flight conditions:
+
+- Mach 0.72 – Roll doublet maneuver.
+- Mach 0.84 – Aileron reversal maneuver.
+
+![Subsonic Validation](Documentation/Figures/subsonic_validation.png)
+
+*Comparison between NASA flight-test data, reference simulation, Roskam and Tornado hinge moment estimates.*
+
+The results showed comparable performance between the two baseline methods under the investigated subsonic conditions, with increasing discrepancies as the transonic regime was approached.
+
+## Supersonic Extension – Miranda Formulation
+
+The original Roskam and Tornado implementations rely on a Prandtl–Glauert compressibility correction, which is not physically applicable beyond Mach 1.
+
+To investigate an extension of the vortex-lattice approach to supersonic conditions, the Tornado implementation was modified using Miranda's generalized swept-horseshoe vortex formulation.
+
+Two approaches were investigated:
+
+- **Mach Cone Masking:** restriction of aerodynamic panel influence according to the supersonic domain of dependence.
+- **Miranda Kernel with Self-Residual:** implementation of the generalized supersonic induced-velocity formulation, including its diagonal self-residual contribution.
+
+The extended implementation was evaluated against NASA flight-test data for Mach 1.58 and Mach 1.60.
+
+![Supersonic Baseline](Documentation/Figures/supersonic_baseline.png)
+
+*Baseline model limitations under supersonic flight conditions.*
+
+![Supersonic Miranda Validation](Documentation/Figures/supersonic_miranda_validation.png)
+
+*Comparison of NASA flight-test data with the Mach-cone masking and Miranda generalized supersonic-kernel implementations.*
+
+The Miranda-based implementation recovers the main dynamic response and the correct order of magnitude of the measured hinge moments. However, overprediction remains at large aileron deflections. The extension should therefore be considered preliminary, with further mesh-sensitivity studies and validation required.
 
 ## Repository Structure
 
 ```text
 .
-├── MAIN_SCRIPT_LOOP.m
+├── README.md
+├── Documentation/
+│   ├── Papers/
+│   └── Figures/
 ├── Functions/
 ├── Inputs/
 ├── Roskam_Models/
@@ -25,54 +90,32 @@ The repository includes two main code versions:
 └── Supersonic_Correction/
 ```
 
-### Thesis Version – Baseline
+The root directory contains the original thesis implementation. The `Supersonic_Correction/` directory contains the subsequent supersonic development.
 
-The main implementation is located in the repository root.
+## Technical Documentation
 
-It includes:
+Additional documentation is available in the `Documentation/Papers/` directory:
 
-- `MAIN_SCRIPT_LOOP.m`: main execution script.
-- `Functions/`: MATLAB functions for geometry, flight conditions and hinge moment calculations.
-- `Inputs/`: configuration and input parameters.
-- `Roskam_Models/`: semi-empirical models and correction functions based on Roskam's methodology.
-- `CPACS_in/`: aircraft geometry input files and CPACS-related utilities.
-- `TORNADO/`: aerodynamic solver and supporting routines.
-- `VALIDATION/`: scripts and datasets used for comparison and validation against reference data.
+- [Master's Thesis – Aileron Hinge Moment Estimation](Documentation/Papers/Masters_Thesis.pdf)
+- [Supersonic Extension – Miranda Kernel Implementation](Documentation/Papers/Supersonic_Extension.pdf)
 
-### Supersonic Extension – Updated Version
-
-The `Supersonic_Correction/` directory contains the updated implementation.
-
-It preserves the general structure of the baseline framework while introducing an additional correction intended to extend the hinge moment estimation methodology to supersonic flight conditions.
-
-This version represents a further development of the original thesis work.
-
-## Methodology
-
-The framework combines two complementary approaches:
-
-- **Semi-empirical approach:** estimation of hinge moment coefficients using Roskam-based models and associated correction functions.
-- **Aerodynamic approach:** aerodynamic computations using Tornado VLM to support the estimation of control surface aerodynamic characteristics.
-
-The resulting framework is intended to provide a computational approach for preliminary aileron hinge moment estimation across different flight conditions.
-
-## Validation
-
-The repository includes dedicated validation scripts and reference datasets.
-
-The validation activities include comparisons with available NASA F/A-18 flight-test data, as well as comparisons between the semi-empirical and VLM-based approaches.
-
-Relevant scripts and datasets are located in `VALIDATION/`.
+These documents provide the theoretical background, mathematical formulations, implementation details, validation procedures and extended results.
 
 ## Requirements
 
 - MATLAB
-- Tornado VLM (included in the repository)
+- Tornado Vortex Lattice Method
+- CPACS geometry input files and associated utilities
 
-Additional configuration and input files are provided within the respective directories.
+## Scope and Limitations
 
-## Notes
+The framework is intended for preliminary aerodynamic load estimation and conceptual aircraft design.
 
-The repository contains both the original thesis implementation and a subsequent development introducing a supersonic correction.
+The baseline methods have been evaluated against F/A-18 SRA reference data under selected subsonic conditions. The supersonic extension represents a preliminary implementation of a generalized vortex-lattice formulation and is not intended to replace higher-fidelity aerodynamic analyses.
 
-The two versions are kept separate to preserve the original implementation and allow comparison with the updated methodology.
+## Author
+
+**Andrea Vitale**
+
+MSc Aeronautical Engineering – Linköping University
+
